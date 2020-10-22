@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Modifier son profil
+{% endblock %}
+
+{% block body %}
+	<h1 class="my-4 text-center title-effect">Modifier votre profil</h1>
+
+
+	{{ include('member/account/_form.html.twig') }}
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Gestion des paiements
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des paiements</h1>
+	{{ include('referent/payment/_links_payment.html.twig') }}
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Contrat</th>
+						<th class="text-center"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for contract in contracts %}
+						{% if contract.status != 'archivé' %}
+							<tr>
+								<td>{{ contract.fullName|capitalize }}</td>
+								<td>
+									<a href="{{ path('referent_payment_list_member', {'id': contract.id}) }}" class="btn btn-outline-info" data-toggle='tooltip' data-placement='top' title='Paiements des adhérents'>
+										<i class="fas fa-euro-sign fa-2x"></i>
+									</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="4">Aucun contrat enregistré</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+
+{% endblock %}

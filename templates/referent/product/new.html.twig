@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Ajouter un produit
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_producer_products') }}">
+
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des producteurs</a>
+	<h1 class="text-center my-5 title-effect">Ajouter un produit</h1>
+
+
+	{{ include('referent/product/_form.html.twig') }}
+
+{% endblock %}

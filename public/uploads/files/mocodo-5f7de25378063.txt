@@ -1,0 +1,39 @@
+DEFINIT, 0N Contract, 11 ContractMember
+Payment:id,checkNumber,amount,depositDate,status
+PAIE3, 11 Payment, 1N ContractMember
+Permanence:id,date,numberPlaces,informations,createdA
+PARTICIPE, 0N Permanence, 0N User
+DonationPayment:id,checkNumber,amount,depositDate,status,checkOrder
+PAIE2, 11 DonationPayment, 1N Donation
+
+Contract:id,name,frequency,startDate,endDate,status,informations,multidistribution,createdAt, emailAuto, frequencyEmailAuto
+CORRESPOND, 11 Delivery, 1N Contract
+ContractMember:id,balance,totalAmount,status,createdAt,startDate
+SOUSCRIT, 0N User, 11 ContractMember
+User:id,email,roles,password,firstName,lastName,address,city,postCode,phone1,phone2,memberType
+DONNE, 11 Donation, 0N User
+Donation:id,amount,donor,createdAt
+
+RELIER A, 11 Contract, 0N Producer
+Delivery:id,date,status
+CREE, 11 Order, 1N ContractMember
+ProductOrder:id,status,date
+PASSE, 0N User, 11 ProductOrder
+ADHERE, 1N User, 01 Subscription
+SubscriptionPayment:id,checkNumber,amount,depositDate,status,checkOrder
+
+Producer:id,name,checkOrder
+REFERE, 1N Delivery, 0N Order
+Order:id,quantity,unitPrice
+GENERE, 11 ProductOrder, 1N Order
+Document:id,name,type,createdAt,update,information
+Subscription:id,createdAt,year,isValid
+PAIE1, 11 SubscriptionPayment, 1N Subscription
+
+PROPOSE, 11 Product, 0N Producer
+Product:id,name,details,price,deposit
+CONTIENT, 0N Product, 01 Order
+File:id,name
+INCLUT, 11 File, 1N Document
+REVERSE, 0N Organism, 1N Subscription
+Organism:id,name,amount

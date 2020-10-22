@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Donation paiements
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('treasurer_donation_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour aux donations</a>
+	<h1 class="text-center mt-5 mb-5 title-effect">Donations les paiements</h1>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Adhérent</th>
+				<th>Numéro de chèque</th>
+				<th>Montant</th>
+				<th>date de dépôt</th>
+				<th>Statut</th>
+				<th></th>
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for payment in pagination.data %}
+				<tr>
+					<td>{{ payment.id }}</td>
+					<td>{{ payment.donation.donor.fullName }}</td>
+					<td>{{ payment.checkNumber }}</td>
+					<td>{{ payment.amount|number_format(2, ',', ' ') }}
+						€</td>
+					<td>{{ payment.depositDate|date("d/m/Y") }}</td>
+					<td>
+						<span class="badge badge-pill {{payment.class}}" id="checkStatus{{payment.id }}">{{payment.status }}</span>
+					</td>
+					<td>
+						<a href="{{path('treasurer_payment_donation_check', {'id':payment.id})}}" class="btn btn-outline-warning {% if payment.status == 'remis' %} disabled {% endif %} checkPayment m-y p-2" id="{{ payment.id }}" data-toggle='tooltip' data-placement='top' title='Remettre le paiement'>
+							<i class="fas fa-cash-register fa-2x"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucun paiement enregistré</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{pagination.render()}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/checkPayment.js')}}"></script>
+{% endblock %}

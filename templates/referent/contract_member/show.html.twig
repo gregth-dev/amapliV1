@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Consulter un contrat adhérent
+{% endblock %}
+
+{% block body %}
+	<div class="row my-3">
+		{% if archive %}
+			<a href="{{ path('referent_contract_member_index_archive') }}">
+				<i class="far fa-arrow-alt-circle-left"></i>
+				Retour à la liste des contrats</a>
+		{% else %}
+			<a href="{{ path('referent_contract_member_index') }}">
+				<i class="far fa-arrow-alt-circle-left"></i>
+				Retour à la liste des contrats</a>
+		{% endif %}
+	</div>
+
+	<div class="jumbotron mt-5">
+		<h1 class="display-3">
+			{{contractMember.contract.fullName}}
+		</h1>
+		<h4 class="my-4">{{contractMember.subscriber.fullName}}</h4>
+		<p class="lead">
+			<div class="row">
+				<div class="col-2">
+					Créé le :
+					{{contractMember.createdAt|date("d/m/Y")}}
+				</div>
+				<div class="col-2">
+					Statut du contrat :
+					{{contractMember.status}}
+				</div>
+				<div class="col-3">
+					Montant du contrat :
+					{{contractMember.totalAmount|number_format(2, ',', ' ')}}
+					€
+					<br>
+					Reste à payer :
+					{{contractMember.balance|number_format(2, ',', ' ')}}
+					€
+				</div>
+				<div class="col-5">
+					<h5>Produits et quantités commandées :</h5>
+					{% if contractMember.orders|length %}
+						<ul>
+							{% for order in contractMember.orders %}
+								<li>{{order.quantity}}
+									x
+									{{order.product.details}}
+									à
+									{{(order.unitPrice)|number_format(2, ',', ' ') }}
+									€ pour
+									{{contractMember.totalDeliveries}}
+									livraisons
+								</li>
+							{% endfor %}
+						</ul>
+					{% else %}
+						Aucune order disponible pour ce contrat
+					{% endif %}
+				</div>
+			</p>
+		</p>
+	</div>
+	<hr class="my-4">
+	<div class="row">
+		<div class="col-4">
+			<h4>Producteur :</h4>
+			<ul>
+				<li>
+					{{contractMember.contract.producer.name}}</li>
+			</ul>
+		</div>
+		<div class="col-4">
+			<h4>Référent :</h4>
+			<ul>
+				<li>Prénom :
+					{{contractMember.contract.producer.referent.firstName}}</li>
+				<li>Nom :
+					{{contractMember.contract.producer.referent.lastName}}</li>
+			</ul>
+		</div>
+		<div class="col-4">
+			<h4>Suppléant :</h4>
+			<ul>
+				{% if contractMember.contract.producer.substitute != null %}
+					<li>Prénom :
+						{{contractMember.contract.producer.substitute.firstName}}</li>
+					<li>Nom :
+						{{contractMember.contract.producer.substitute.lastName}}</li>
+				{% else %}
+					<li>aucun suppléant n'est défini pour ce contract.</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+	<h4>Dates des distributions</h4>
+	<div class="row mb-3">
+		<span class="badge badge-pill badge-success mr-2">Validée</span>
+		<span class="badge badge-pill badge-danger mr-2">Annulée</span>
+		<span class="badge badge-pill badge-warning mr-2">Reportée</span>
+		<span class="badge badge-pill badge-dark">A confirmer</span>
+	</div>
+	{% if contractMember.orders|length %}
+		<div class="row">
+			{% for order in contractMember.orders %}
+				{% for productOrder in order.productOrders %}
+					<div class="col-2">
+						{% if productOrder.status %}
+							<span class="badge badge-pill {{productOrder.class}}">{{productOrder.date|date("d/m/Y")}}</span>
+						{% else %}
+							{{productOrder.date|date("d/m/Y")}}
+						{% endif %}
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
+	{% else %}
+		Aucune distribution disponible pour ce contrat
+	{% endif %}
+</div>{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ parent() }}Mes livraisons
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Mes livraisons</h1>
+	{{paginationDate.renderWithUser()}}
+	<div class="row justify-content-md-center mt-5">
+		{% for key, date in paginationDate.data %}
+			<div class="card {% if 'Annulée' in key %}bg-danger{% elseif 'Reportée' in key %}bg-warning{% elseif 'A Confirmer' in key %}bg-dark{% else %}bg-info{% endif %} text-white mb-5 mr-4" style="max-width: 20rem;">
+
+				<div class="card-header">Le
+					{{key}}</div>
+
+				<div class="card-body">
+					<p class="card-text">
+						<ul>
+							{% for order in date %}
+								<li>
+									<i class="fas fa-angle-right"></i>
+									{{order.quantity}}
+									{{order.product.name}}
+									:
+									<br>
+									{{order.product.details}}
+
+								</li>
+							{% endfor %}
+						</ul>
+					</p>
+				</div>
+			</div>
+		{% else %}
+			<div class="col text-center">
+				Aucune livraison prévue
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

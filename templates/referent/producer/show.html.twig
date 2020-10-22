@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Consulter un producteur
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_producer_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des producteurs</a>
+	<div class="jumbotron mt-5">
+		<h1 class="display-3">{{producer.name}}</h1>
+
+		<p class="lead">
+			<div class="row">
+				<div class="col-3">
+					Membre depuis le :
+					{{producer.user.createdAt|date("d/m/Y")}}
+				</div>
+			</div>
+		</p>
+		<hr class="my-4">
+		<div class="row">
+			<div class="col-3">
+				<h4>Coordonnées :</h4>
+				<ul>
+					<li>{{producer.user.fullName}}</li>
+					<li>{{producer.user.email}}</li>
+					<li>{{producer.user.phone1}}</li>
+					<li>{{producer.user.phone2}}</li>
+					<li>{{producer.user.address}}</li>
+					<li>{{producer.user.city}}</li>
+					<li>{{producer.user.postcode}}</li>
+
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Producteur :</h4>
+				<ul>
+					<li>Ordre des chèques :
+						{{producer.checkOrder}}</li>
+
+
+				</ul>
+			</div>
+			<div class="col-3">
+				<h4>Référent :</h4>
+				<ul>
+					<li>Prénom :
+						{{producer.referent.firstName}}</li>
+					<li>Nom :
+						{{producer.referent.lastName}}</li>
+
+				</ul>
+			</div>
+			<div class="col-2">
+				<h4>Suppléant :</h4>
+				<ul>
+					{% if producer.substitute != null %}
+						<li>Prénom :
+							{{producer.substitute.firstName}}</li>
+						<li>Nom :
+							{{producer.substitute.lastName}}</li>
+					{% else %}
+						<li>aucun suppléant n'est défini pour ce producer.</li>
+					{% endif %}
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Liste des contrats :</h4>
+				<ul>
+					{% for contract in producer.contracts %}
+						<li>{{contract.fullName|capitalize}}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Produits :</h4>
+				<ul>
+					{% for product in producer.products %}
+						<li>{{product.name}}
+							:
+							{{product.details}}
+							à
+							{{product.price}}
+							€</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}

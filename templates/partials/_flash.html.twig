@@ -1,0 +1,45 @@
+{% for label, messages in app.flashes %}
+	<div class="container my-3">
+		{% for message in messages %}
+			{% if label == 'success' %}
+				<script>
+					var notification = new NotificationFx({
+wrapper: document.body,
+message: '<i class="fas fa-check fa-2x"></i><p>            {{ message }}</p>',
+layout: 'bar',
+effect: 'slidetop',
+type: 'success',
+ttl: 3000,
+onClose: function () {
+return false;
+},
+onOpen: function () {
+return false;
+}
+});
+notification.show();
+				</script>
+			{% endif %}
+			{% if label == 'danger' %}
+				<script>
+					var notification = new NotificationFx({
+wrapper: document.body,
+message: '<i class="fas fa-exclamation-triangle fa-2x"></i><p>  {{ message }}</p>',
+
+layout: 'bar',
+effect: 'slidetop',
+type: 'danger',
+ttl: 6000,
+onClose: function () {
+return false;
+},
+onOpen: function () {
+return false;
+}
+});
+notification.show();
+				</script>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endfor %}

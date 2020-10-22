@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Tableau de bord
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center my-3 title-effect">Tableau de bord</h1>
+	<div class="row my-5 justify-content-around">
+		<div class="card bg-info text-white" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>{{totalMember}}
+					{% if totalMember > 1 %}
+						Adhérents
+					{% else %}
+						Adhérent
+					{% endif %}
+				</h4>
+			</div>
+			<a href="{{path('referent_member_index')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="fas fa-users fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+		<div class="card bg-warning text-white" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>{{totalProducer}}
+					{% if totalProducer > 1 %}
+						Producteurs
+					{% else %}
+						Producteur
+					{% endif %}
+				</h4>
+			</div>
+			<a href="{{path('referent_producer_index')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="fas fa-tractor fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="row my-5 justify-content-around">
+		<div class="card bg-success text-white" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>{{totalContract}}
+					{% if totalContract > 1 %}
+						Contrats<br>Producteurs
+					{% else %}
+						Contrat<br>Producteur
+					{% endif %}
+				</h4>
+			</div>
+			<a href="{{path('referent_contract_index')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="fas fa-file-signature fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+		<div class="card bg-danger text-white" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>{{totalProduct}}
+					{% if totalProduct > 1 %}
+						Produits
+					{% else %}
+						Produit
+					{% endif %}
+				</h4>
+			</div>
+			<a href="{{path('referent_producer_products')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="fas fa-apple-alt fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>{% endblock %}

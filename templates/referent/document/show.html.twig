@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter un document
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_document_index') }}">
+
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des documents</a>
+	<h1 class="text-center my-5 title-effect">Consulter un document</h1>
+	<div class="jumbotron mt-5">
+
+		<p class="lead">
+			<div class="row">
+				<div class="col-3">
+					Créé le :
+					{{document.createdAt|date("d/m/Y")}}
+				</div>
+			</div>
+		</p>
+		<hr class="my-4">
+		<div class="row">
+			<div class="col">
+				<h4>Détails :</h4>
+				<ul>
+					<li>Nom du document :
+						{{document.name}}</li>
+					<li>Type du document :
+						{{document.type}}</li>
+					<li>Dernière mise à jour :
+						{{document.updateDate|date("d/m/Y")}}</li>
+				</ul>
+			</div>
+			<div class="col">
+				<h4>Informations complémentaires :</h4>
+				<ul>
+					<li>{{document.information}}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h4>
+					{% for file in document.files %}
+						<a href="{{asset('/uploads/files/' ~ file.name)}}" target="_blank">
+							<i class="far fa-file{{document.icon}} fa-2x"></i>
+						</a>
+					{% endfor %}
+				</h4>
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-start">
+		<a href="{{ path('referent_document_edit', {'id': document.id}) }}" class="btn btn-outline-primary m-1 p-1" data-toggle='tooltip' data-placement='top' title='Modifier'>
+			<i class="far fa-edit fa-2x"></i>
+		</a>
+		<a href="{{ path('referent_document_delete', {'id': document.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ document.id) }}" class="btn btn-outline-danger m-1 p-1" data-redirect="on" link-redirect="{{ path('referent_document_index') }}" data-delete-text="ce document" data-toggle='tooltip' data-placement='top' title='Supprimer'>
+
+			<i class="far fa-trash-alt fa-2x"></i>
+		</a>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

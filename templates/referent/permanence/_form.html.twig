@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+<div class="row">
+	<div class="col-3">
+		{{ form_row(form.date) }}
+	</div>
+	<div class="col-3">
+		{{ form_row(form.numberPlaces) }}
+	</div>
+	<div class="col-6">
+		{{ form_row(form.informations) }}
+	</div>
+</div>
+<button type="submit" class="btn {{ button_class|default('btn-outline-primary') }} my-4">
+	<i class="far fa-save"></i>
+	{{ button_label|default('Enregistrer la permanence') }}</button>
+
+{{ form_end(form) }}

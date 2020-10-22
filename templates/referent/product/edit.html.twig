@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Modifier un Produit
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_product_list', {'id':product.producer.id}) }}">
+
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des produits</a>
+	<h1 class="text-center my-5 title-effect">Modifier un produit</h1>
+
+	{{ include('referent/product/_form.html.twig', {'button_label': 'Mettre à jour le produit', 'button_class' : 'btn-outline-success'}) }}
+{% endblock %}

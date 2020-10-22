@@ -1,0 +1,47 @@
+{% extends 'base_pdf.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Mes paiements
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Mes paiements</h1>
+	<br><br>
+	<div class="row mt-5">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">N°</th>
+					<th scope="col">Emetteur</th>
+					<th scope="col">Numéro du chèque</th>
+					<th scope="col">Montant</th>
+					<th scope="col">Date</th>
+					<th scope="col">Statut</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for payment in payments %}
+					<tr>
+						<th scope="row">{{payment.id}}</th>
+						<td>{{payment.contractMember.subscriber.fullName}}</td>
+						<td>{{payment.checkNumber}}</td>
+						<td>{{payment.amount|number_format(2, ',', ' ')}}
+							€</td>
+						<td>{{ payment.depositDate|date("d-m-Y") }}</td>
+						<td>{{ payment.status }}</td>
+					</tr>
+				{% else %}
+					<div class="col text-center">
+						Aucune livraison prévue
+					</div>
+				{% endfor %}
+			</tbody>
+		</table>
+		<p>Total des paiements :
+			{{totalPayments|number_format(2, ',', ' ')}}
+			€</p>
+		<p>Nombre de chèques :
+			{{totalCheck}}</p>
+
+	</div>
+{% endblock %}

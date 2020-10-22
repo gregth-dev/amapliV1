@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Les administrateurs
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion d'accès aux documents</h1>
+	{{ form_start(form) }}
+	<div class="row">
+		<div class="col-4">{{ form_row(form.username) }}</div>
+
+		<div class="col-4">{{ form_row(form.plainPassword) }}</div>
+	</div>
+	<button type="submit" class="btn {{ button_class|default('btn-outline-primary') }} my-4">
+		<i class="far fa-save"></i>
+		{{ button_label|default('Créer les identifiants') }}</button>
+	{{ form_end(form) }}
+{% endblock %}

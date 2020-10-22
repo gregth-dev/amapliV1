@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les permanences
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Les permanences</h1>
+	{{paginationDate.renderDefault()}}
+	<div class="row justify-content-md-center mb-2">
+		<a href="{{path('member_permanence_list')}}" class="ml-2">Mes permanences</a>
+	</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col" class="text-center">N°
+				</th>
+				<th scope="col" class="text-center">Date
+				</th>
+				<th scope="col" class="text-center">Nombre de places
+				</th>
+				<th scope="col" class="text-center">Nombre d'inscrits
+				</th>
+				<th scope="col" class="text-center"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for permanence in paginationDate.data %}
+				<tr class="table-light">
+					<td class="text-center">{{ permanence.id }}</td>
+					<td class="text-center">{{ permanence.date|date('d-m-Y') }}</td>
+					<td class="text-center">{{ permanence.numberPlaces }}</td>
+					<td class="text-center">{{ permanence.participants|length }}</td>
+					<td>
+						<a href="{{ path('permanence_show', {'id': permanence.id}) }}" class="btn btn-outline-info my-1 p-1" data-toggle='tooltip' data-placement='top' title='Consulter'>
+							<i class="far fa-eye fa-2x"></i>
+						</a>
+						{% if permanence in app.user.permanences %}
+							<a href="{{ path('permanence_unsubscribe', {'id': permanence.id}) }}" class="btn btn-outline-warning my-1 p-1" data-toggle='tooltip' data-placement='top' title='Se désinscrire'>
+								<i class="fas fa-user-slash fa-2x"></i>
+							</a>
+						{% else %}
+							<a href="{{ path('permanence_subscribe', {'id': permanence.id}) }}" class="btn btn-outline-warning my-1 p-1" data-toggle='tooltip' data-placement='top' title="S'inscrire">
+								<i class="fas fa-user-plus fa-2x"></i>
+							</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Aucune permanence enregistrée</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

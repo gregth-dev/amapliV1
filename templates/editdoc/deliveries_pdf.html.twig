@@ -1,0 +1,32 @@
+{% extends 'base_pdf.html.twig' %}
+
+{% block title %}
+	Livraisons
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Livraisons</h1>
+	<h2>{{producer}}</h2>
+	<br><br>
+	<table>
+		<tr>
+			{% for date, products in deliveries %}
+				<th>{{date}}</th>
+			{% endfor %}
+		</tr>
+		<tr>
+			{% for date, products in deliveries %}
+				<td>
+					{% for product, quantity in products %}
+						{{product}}
+						<br>
+						Qté :
+						{{quantity}}
+						<br>
+					{% endfor %}
+				</td>
+			{% endfor %}
+		</tr>
+	</table>
+	<br><br><br><br>
+{% endblock %}

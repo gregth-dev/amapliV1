@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Créer un nouveau contrat producteur
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_contract_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des contrats producteurs</a>
+	<h1 class="text-center my-5 title-effect">Créer un contrat producteur</h1>
+
+
+	{{ include('referent/contract/_form.html.twig') }}
+
+{% endblock %}

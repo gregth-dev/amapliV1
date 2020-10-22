@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Liste des produits
+{% endblock %}
+
+{% block body %}
+	<a href="{{path('referent_producer_products')}}">
+
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des producteurs</a>
+	<h1 class="text-center mt-5 mb-5 title-effect">Les produits de
+		{{producer.name}}</h1>
+	<div class="row my-3">
+		<a href="{{ path('referent_product_new') }}" class="btn btn-outline-primary mb-2">
+			<i class="fas fa-plus-circle"></i>
+			Ajouter un produit</a>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Nom</th>
+				<th>Details</th>
+				<th>Prix</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for product in products %}
+				<tr>
+					<td>{{ product.id }}</td>
+					<td>{{ product.name|capitalize }}</td>
+					<td>{{ product.details }}</td>
+					<td>{{ product.price|number_format(2, ',', ' ') }}
+						€</td>
+					<td>
+						<a href="{{ path('referent_product_edit', {'id': product.id}) }}" class="btn btn-outline-primary my-1 p-1" data-toggle='tooltip' data-placement='top' title='Modifier'>
+
+							<i class="far fa-edit fa-2x"></i>
+						</a>
+						{% if product.orders|length == 0 %}
+							<a href="{{ path('referent_product_delete', {'id': product.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ product.id) }}" class="btn btn-outline-danger my-1 p-1" data-delete-text="ce produit" data-toggle='tooltip' data-placement='top' title='Supprimer'>
+
+								<i class="far fa-trash-alt fa-2x"></i>
+							</a>
+
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Pas de produit enregistré pour ce producteur</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

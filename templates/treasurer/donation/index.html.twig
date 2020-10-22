@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Liste des donations
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des donations</h1>
+	<div class="row my-3">
+		<div class="col-3">
+			<a href="{{ path('treasurer_donation_new') }}" class="btn btn-outline-primary ml-5">
+				<i class="fas fa-plus-circle"></i>
+				Ajouter une donation
+			</a>
+		</div>
+		<div class="col-3">
+			<a href="{{ path('treasurer_payment_donation_index') }}" class="btn btn-outline-primary ml-5">
+				<i class="fas fa-eye"></i>
+				Voir les paiements
+			</a>
+		</div>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Donateur</th>
+				<th>Montant</th>
+				<th>Paiement</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for donation in donations %}
+				<tr>
+					<td>{{ donation.id }}</td>
+					<td>{{ donation.donor.fullName }}</td>
+					<td>{{ donation.amount }}
+						€</td>
+					<td>
+						<ul>
+							{% for payment in donation.payment %}
+								<li>chèque N° :
+									{{payment.checkNumber}}</li>
+								<li>Montant :
+									{{payment.amount|number_format(2, ',', ' ')}}
+									€</li>
+								<li>Ordre :
+									{{payment.checkOrder}}</li>
+								<li>Statut :
+									{{payment.status}}</li>
+								<li>Date :
+									{{payment.depositDate|date("d-m-Y")}}</li>
+							{% endfor %}
+						</ul>
+					</td>
+
+					<td>
+						<a href="{{ path('treasurer_donation_edit', {'id': donation.id}) }}" class="btn btn-outline-primary my-1 p-1" data-toggle='tooltip' data-placement='top' title='Modifier'>
+							<i class="far fa-edit fa-2x"></i>
+						</a>
+						<a href="{{ path('treasurer_donation_delete', {'id': donation.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ donation.id) }}" class="btn btn-outline-danger{% if donation.payment[0].status == 'remis' %} disabled {% endif %} mr-2" data-delete-text="cette donation" data-toggle='tooltip' data-placement='top' title='Supprimer'>
+							<i class="far fa-trash-alt fa-2x"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucune donation enregistrée</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,5 @@
+<div class="row justify-content-md-center mb-3">
+	{% for y in years %}
+		<a href="{{path('referent_contract_index', {'year':y})}}" class="btn{% if y == year %} btn-info disabled{% else %} btn-outline-info {% endif %} mr-2">{{y}}</a>
+	{% endfor %}
+</div>

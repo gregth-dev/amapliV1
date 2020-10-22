@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Liste des produits
+{% endblock %}
+
+{% block body %}
+	<a href="{{path('producer_products')}}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des producteurs</a>
+	<h1 class="text-center mt-5 mb-5 title-effect">Les produits de
+		{{producer.name}}</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nom du produit</th>
+				<th>Details</th>
+				<th>Prix</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for product in products %}
+				<tr>
+					<td>{{ product.name }}</td>
+					<td>{{ product.details }}</td>
+					<td>{{ product.price|number_format(2, ',', ' ') }}
+						€</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Pas de produits enregistrés pour ce producteur</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

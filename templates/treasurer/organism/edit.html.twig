@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Modifier une association
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('treasurer_organism_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des associations</a>
+	<h1 class="text-center my-5 title-effect">Modifier une association</h1>
+	{{ include('treasurer/subscription/_form.html.twig', {'button_label': "Mettre à jour l'association", 'button_class' : 'btn-outline-success'}) }}
+{% endblock %}

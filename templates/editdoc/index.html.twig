@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer des PDF
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect h2">Editer une feuille d'émargement</h1>
+
+	{{ form_start(form) }}
+	{{ form_errors(form) }}
+	<div class="row align-items-center">
+		<div class="col-3">
+			{{ form_row(form.contract) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.orientation) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.startDate) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.endDate) }}
+		</div>
+	</div>
+	<div class="row">
+		<h6>Enregistrer le document dans la base de données :</h6>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			{{ form_row(form.saveDoc) }}
+		</div>
+		<div class="col-5">
+			{{ form_row(form.docName) }}
+		</div>
+	</div>
+	<div class="col-2 form-group">
+		<button type="submit" class="btn {{ button_class|default('btn-outline-primary') }} my-4">
+			<i class="fas fa-print fa-2x"></i>
+		</button>
+	</div>
+	{{ form_end(form) }}
+
+
+{% endblock %}

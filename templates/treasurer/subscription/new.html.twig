@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Ajouter une adhésion
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('treasurer_subscription_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour aux adhésions</a>
+	<h1 class="text-center my-5 title-effect">Ajouter une adhésion</h1>
+	{{ include('treasurer/subscription/_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau contrat adhérent
+
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center my-5 title-effect">Créer un contrat adhérent</h1>
+
+
+	{{ include('referent/contract_member/_form2.html.twig') }}
+
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

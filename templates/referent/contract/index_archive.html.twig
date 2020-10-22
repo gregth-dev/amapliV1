@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Les contrats producteurs archivés
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Contrats Producteurs archivés</h1>
+	<div class="row my-3"></div>
+	<div class="row justify-content-md-center mb-3">
+		{% for year in years %}
+			<a href="{{path('referent_contract_index_archive', {'year':year})}}" class="btn btn-outline-info my-1 py-2 px-2">{{year}}</a>
+		{% endfor %}
+	</div>
+	<div class="row justify-content-center">
+		<div class="col">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>N°</th>
+						<th>Contrat</th>
+						<th>Producteur</th>
+						<th>Créé le</th>
+						<th>Année</th>
+						<th>Statut</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for contract in contracts %}
+						<tr>
+							<td>{{ contract.id }}</td>
+							<td>{{ contract.name }}</td>
+							<td>{{ contract.producer.name }}</td>
+							<td>{{ contract.createdAt|date('d-m-Y')}}</td>
+							<td>{{ contract.year }}</td>
+							<td>{{ contract.status }}</td>
+							<td>
+								<a href="{{ path('contract_show', {'id': contract.id}) }}" class="btn btn-outline-info px-1 py-1" data-toggle='tooltip' data-placement='top' title='Consulter'>
+									<i class="far fa-eye fa-2x"></i>
+								</a>
+								<a href="{{ path('referent_contract_member_list_archive', {'id': contract.id}) }}" class="btn btn-outline-warning my-1 px-1 py-1" data-toggle='tooltip' data-placement='top' title='Archiver les contrats adhérents'>
+									<i class="fas fa-archive fa-2x"></i>
+								</a>
+								<a href="{{ path('referent_contract_delete_archive', {'id': contract.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ contract.id) }}" class="btn btn-outline-danger my-1 px-1 py-1" data-delete-text="ce contrat" data-toggle='tooltip' data-placement='top' title='Supprimer'>
+									<i class="far fa-trash-alt fa-2x"></i>
+								</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="8">Aucun contrat enregistré</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

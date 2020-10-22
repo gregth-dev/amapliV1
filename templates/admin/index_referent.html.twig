@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Les référents
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des référents</h1>
+
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prenom</th>
+						<th>Inscrit le</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in pagination.data %}
+						<tr>
+							<td>{{ user.lastName }}</td>
+							<td>{{ user.firstName }}</td>
+							<td>{{ user.createdAt|date("d/m/Y") }}</td>
+							<td>
+								<a href="{{ path('admin_admin_delete', {'id': user.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ user.id) }}" class="btn btn-outline-danger my-1 p-1" data-delete-text="ce rôle" data-toggle='tooltip' data-placement='top' title='Supprimer le rôle'>
+									<i class="far fa-trash-alt fa-2x"></i>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{pagination.render()}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Liste des adhésions
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Les adhésions</h1>
+	<div class="row my-3">
+		<div class="col-3">
+			<a href="{{ path('treasurer_subscription_new') }}" class="btn btn-outline-primary ml-5">
+				<i class="fas fa-plus-circle"></i>
+				Ajouter une adhésion
+			</a>
+		</div>
+		<div class="col-5">
+			<a href="{{ path('treasurer_subscription_unsubscribe') }}" class="btn btn-outline-primary ml-5">
+				<i class="fas fa-eye"></i>
+				Voir les adhérents sans adhésion
+			</a>
+		</div>
+		<div class="col-3">
+			<a href="{{ path('treasurer_payment_subscription_index') }}" class="btn btn-outline-primary ml-5">
+				<i class="fas fa-eye"></i>
+				Voir les paiements
+			</a>
+		</div>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Adhérent</th>
+				<th>Associations</th>
+				<th>Date de souscription</th>
+				<th>Paiement</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for subscription in pagination.data %}
+				<tr>
+					<td>{{ subscription.id }}</td>
+					<td>{{ subscription.subscriber.fullName }}</td>
+					<td>
+						<ul>
+							{% for organism in subscription.organism %}
+								<li>{{organism.name}}
+									:
+									{{organism.amount}}
+									€</li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>{{ subscription.createdAt|date('d/m/Y') }}</td>
+					<td>
+						<ul>
+							{% for payment in subscription.payment %}
+								<li>chèque N° :
+									{{payment.checkNumber}}</li>
+								<li>Montant :
+									{{payment.amount|number_format(2, ',', ' ')}}
+									€</li>
+								<li>Ordre :
+									{{payment.checkOrder}}</li>
+								<li>Statut :
+									{{payment.status}}</li>
+								<li>Date de dépôt :
+									{{payment.depositDate|date("d-m-Y")}}</li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>
+						<a href="{{ path('treasurer_subscription_edit', {'id': subscription.id}) }}" class="btn btn-outline-primary my-1 p-1" data-toggle='tooltip' data-placement='top' title='Modifier'>
+							<i class="far fa-edit fa-2x"></i>
+						</a>
+						<a href="{{ path('treasurer_subscription_delete', {'id': subscription.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ subscription.id) }}" class="btn btn-outline-danger{% if subscription.isValid %} disabled {% endif %} my-1 p-1" data-delete-text="cette adhésion" data-toggle='tooltip' data-placement='top' title='Supprimer'>
+							<i class="far fa-trash-alt fa-2x"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="2">Aucune adhésion enregistrée</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{pagination.render()}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

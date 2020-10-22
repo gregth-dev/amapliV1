@@ -1,0 +1,37 @@
+{% block _contract_member4_payments_widget %}
+	{{ form_widget(form) }}
+	<div class="form-group">
+		<button type="button" id="add-payment" class="btn btn-primary">
+			<i class="fas fa-plus"></i>
+			Ajouter un paiement
+		</button>
+	</div>
+{% endblock %}
+
+{% block _contract_member4_payments_entry_widget %}
+	<div class="form-group" id="block_{{id}}">
+		<div class="row">
+			<div class="col-10">
+				<div class="row">
+					<div class="col">
+						{{ form_widget(form.checkNumber) }}
+						{{ form_errors(form.checkNumber) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.depositDate) }}
+						{{ form_errors(form.depositDate) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.amount) }}
+						{{ form_errors(form.amount) }}
+					</div>
+				</div>
+			</div>
+			<div class="col-2">
+				<button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-outline-danger">
+					<i class="far fa-trash-alt"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+{% endblock %}

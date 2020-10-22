@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Consulter un contrat adhérent
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('contract_member_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des contrats adhérents</a>
+	<div class="jumbotron mt-5">
+		<h1 class="display-3">{{contractMember.contract.fullName}}</h1>
+		<h4 class="my-4">{{contractMember.subscriber.fullName}}</h4>
+		<p class="lead">
+			<div class="row">
+				<div class="col-3">
+					Créé le :
+					{{contractMember.createdAt|date("d/m/Y")}}
+				</div>
+				<div class="col-3">
+					Statut du contrat :
+					{{contractMember.status}}
+				</div>
+				<div class="col-6">
+					<h5>Produits et quantités commandées :</h5>
+					{% if contractMember.orders|length %}
+						<ul>
+							{% for order in contractMember.orders %}
+								<li>{{order.quantity}}
+									x
+									{{order.product.details}}
+									à
+									{{(order.unitPrice)|number_format(2, ',', ' ') }}
+									€ pour
+									{{contractMember.contract.deliveries|length}}
+									livraisons
+								</li>
+							{% endfor %}
+						</ul>
+
+					{% else %}
+						Aucune commande disponible pour ce contrat
+					{% endif %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4">Montant total du contrat :
+					{{contractMember.totalAmount|number_format(2, ',', ' ')}}
+					€</div>
+				<div class="col-4">Reste à payer :
+					{{contractMember.balance|number_format(2, ',', ' ')}}
+					€</div>
+			</div>
+		</p>
+		<hr class="my-4">
+		<div class="row">
+			<div class="col">
+				<h4>Détails du
+					{{contractMember.contract.name}}
+					:</h4>
+				<ul>
+					<li>Date de début des distributions :
+						{{contractMember.contract.startDate|date("d/m/Y")}}</li>
+					<li>Date de fin des distributions :
+						{{contractMember.contract.endDate|date("d/m/Y")}}</li>
+					<li>Nombre de distributions :
+						{{contractMember.contract.deliveries|length}}</li>
+				</ul>
+			</div>
+			<div class="col">
+				<h4>Informations complémentaires :</h4>
+				<ul>
+					<li>{{contractMember.contract.informations}}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<h4>Producteur :</h4>
+				<ul>
+					<li>
+						{{contractMember.contract.producer.name}}
+					</li>
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Référent :</h4>
+				<ul>
+					<li>Prénom :
+						{{contractMember.contract.producer.referent.firstName}}</li>
+					<li>Nom :
+						{{contractMember.contract.producer.referent.lastName}}</li>
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Suppléant :</h4>
+				<ul>
+					{% if contractMember.contract.producer.substitute != null %}
+						<li>Prénom :
+							{{contractMember.contract.producer.substitute.firstName}}</li>
+						<li>Nom :
+							{{contractMember.contract.producer.substitute.lastName}}</li>
+					{% else %}
+						<li>aucun suppléant n'est défini pour ce contrat.</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+		<h4>Dates des distributions</h4>
+		<div class="row mb-3">
+			<span class="badge badge-pill badge-success mr-2">Validée</span>
+			<span class="badge badge-pill badge-danger mr-2">Annulée</span>
+			<span class="badge badge-pill badge-warning mr-2">Reportée</span>
+			<span class="badge badge-pill badge-dark">A confirmer</span>
+		</div>
+		<div class="row">
+			{% for delivery in contract.deliveries %}
+				<div class="col-2">
+					{% if delivery.status %}
+						<span class="badge badge-pill {{delivery.class}}">{{delivery.date|date("d/m/Y")}}</span>
+					{% else %}
+						{{delivery.date|date("d/m/Y")}}
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

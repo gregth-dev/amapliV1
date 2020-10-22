@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des documents
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des documents</h1>
+	<div class="row justify-content-center">
+		<div class="col-6">
+			<input class="form-control my-3 searchBar" placeholder="Rechercher un document" data="{{path('search_document')}}">
+		</div>
+	</div>
+	<a href="{{ path('referent_document_new') }}" class="btn btn-outline-primary mb-2">
+		<i class="fas fa-plus-circle"></i>
+		Ajouter un document</a>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Titre du document</th>
+				<th>Date d'ajout</th>
+				<th>Date dernière modification</th>
+				<th>Type du document</th>
+				<th>Voir</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for document in pagination.data %}
+				<tr class="table-light">
+					<td>{{ document.id }}</td>
+					<td>{{ document.name }}</td>
+					<td>{{ document.createdAt|date('d-m-Y') }}</td>
+					<td>{{ document.updateDate|date('d-m-Y') }}</td>
+					<td>{{ document.type }}</td>
+					<td class="text-center">
+						<a href="{{ path('referent_document_show', {'id': document.id}) }}" data-toggle='tooltip' data-placement='top' title='Voir le document'>
+							<i class="far fa-file{{document.icon}} fa-2x"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucun document enregistré</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{pagination.render()}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/search/searchDocument.js')}}"></script>
+
+{% endblock %}

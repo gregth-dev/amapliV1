@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Les administrateurs
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des administrateurs</h1>
+
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Membre</th>
+						<th>Rôle</th>
+						<th>Inscrit le</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in pagination.data %}
+						{% if user != app.user %}
+							<tr>
+								<td>{{ user.lastName }}</td>
+								<td>{{ user.firstName }}</td>
+								<td>{{ user.createdAt|date("d/m/Y") }}</td>
+								<td>
+									<a href="{{ path('admin_admin_delete', {'id': user.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ user.id) }}" class="btn btn-outline-danger my-1 p-1" data-delete-text="ce rôle" data-toggle='tooltip' data-placement='top' title='Supprimer le rôle'>
+										<i class="far fa-trash-alt fa-2x"></i>
+									</a>
+
+								</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{pagination.render()}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

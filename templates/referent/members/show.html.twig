@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Consulter un adhérent
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_member_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des adhérents</a>
+	<div class="jumbotron mt-5">
+		<h1 class="display-3">{{user.firstName|capitalize}}
+			{{user.lastName|capitalize}}</h1>
+
+
+		<p class="lead">
+			<div class="row">
+				<div class="col-3">
+					Membre depuis le :
+					{{user.createdAt|date("d/m/Y")}}
+					Rôle :
+					{{user.memberType}}
+				</div>
+			</div>
+		</p>
+		<hr class="my-4">
+		<div class="row">
+			<div class="col-4">
+				<h4>Coordonnées :</h4>
+				<ul>
+					<li>{{user.email}}</li>
+					<li>{{user.phone1}}</li>
+					<li>{{user.phone2}}</li>
+					<li>{{user.address}}</li>
+					<li>{{user.city}}</li>
+					<li>{{user.postcode}}</li>
+
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Liste des contrats :</h4>
+				<ul>
+					{% for contractMember in user.contractMembers %}
+						<li>{{contractMember.contract.fullName|capitalize}}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Produits :</h4>
+				<ul>
+					{% for contractMember in user.contractMembers %}
+						{% for order in contractMember.orders %}
+							<li>{{ order.product.fullName|capitalize }}</li>
+						{% endfor %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<a href="{{ path('referent_member_edit', {'id': user.id}) }}" class="btn btn-outline-primary my-1 p-1" data-toggle='tooltip' data-placement='top' title='Modifier'>
+		<i class="far fa-edit fa-2x"></i>
+	</a>
+	<a href="{{ path('referent_member_delete', {'id': user.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ user.id) }}" class="btn btn-outline-danger my-1 p-1" data-redirect='on' link-redirect="{{ path('referent_member_index') }}" data-delete-text="cet adhérent" data-toggle='tooltip' data-placement='top' title='Supprimer'>
+
+		<i class="far fa-trash-alt fa-2x"></i>
+	</a>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

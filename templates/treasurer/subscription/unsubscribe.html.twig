@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Liste des adhérents sans adhésion
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('treasurer_subscription_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour aux adhésions</a>
+	<h1 class="text-center mt-5 mb-5 title-effect">Les adhérents sans adhésion</h1>
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Adhérent</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for subscriber in subscribers %}
+						{% if subscriber.subscriptions|length == 0 %}
+							<tr>
+								<td>{{ subscriber.fullName }}</td>
+								<td>
+									<a href="{{ path('treasurer_subscription_new', {'id': subscriber.id}) }}" class="btn btn-outline-primary my-1 p-1" data-toggle='tooltip' data-placement='top' title='Adhérer'>
+										<i class="fas fa-user-plus fa-2x"></i>
+									</a>
+
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="2">Pas d'adhérent sans adhésion</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

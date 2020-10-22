@@ -1,0 +1,17 @@
+{% form_theme form 'referent/contract_member/_payment.html.twig' %}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<div class="row justify-content-between">
+	<div class="col-3">
+		<a href="{{ path('referent_contract_member_delete', {'id': contractMember.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ contractMember.id) }}" class="btn btn-outline-primary my-1 p-1" id="deleteBtn{{ contractMember.id }}" data-redirect="on" link-redirect="{{ path('referent_contract_member_index')}}" data-delete-text="ce contrat adhérent">
+			<i class="far fa-times-circle"></i>
+			Annuler</a>
+	</div>
+	<div class="col-3">
+		<button type="submit" class="btn {{ button_class|default('btn-outline-primary') }} my-4">
+			<i class="far fa-save"></i>
+			{{ button_label|default('Enregistrer le contrat') }}</button>
+	</div>
+</div>
+{{ form_end(form) }}

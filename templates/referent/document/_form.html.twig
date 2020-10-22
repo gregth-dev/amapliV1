@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+<div class="row">
+	<div class="col-4">
+		{{ form_row(form.name) }}
+	</div>
+	<div class="col-4">
+		{{ form_row(form.files) }}
+	</div>
+</div>
+<div class="row">
+	<div class="col-6">
+		{{ form_row(form.information) }}
+	</div>
+</div>
+<button type="submit" class="btn {{ button_class|default('btn-outline-primary') }} my-4">
+	<i class="far fa-save"></i>
+	{{ button_label|default('Enregistrer le document') }}
+</button>
+{{ form_end(form) }}

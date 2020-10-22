@@ -1,0 +1,10 @@
+<div class="row justify-content-md-center mb-3">
+	{% for y in years %}
+		<a href="{{path(path, {'year': y, 'id': user.id})}}" class="btn{% if y == year %} btn-info disabled{% else %} btn-outline-info {% endif %} mr-2">{{y}}</a>
+	{% endfor %}
+</div>
+<div class="row justify-content-md-center my-5">
+	{% for m in months %}
+		<a href="{{path(path, {'month': loop.index, 'year': year, 'id': user.id})}}" class="btn {% if month == loop.index %} btn-info disabled{% else %} btn-outline-info {% endif %} mr-2">{{m}}</a>
+	{% endfor %}
+</div>

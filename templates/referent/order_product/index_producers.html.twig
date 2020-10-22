@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Gestion des livraisons
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Les livraisons</h1>
+	{% include "referent/order_product/_links_deliveries.html.twig" %}
+	<div class="row justify-content-center">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Producteurs</th>
+					<th class="text-center"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for producer in producers %}
+					<tr>
+						<td>{{ producer.id }}</td>
+						<td>{{ producer.name }}</td>
+						<td>
+							<a href="{{ path('referent_deliveries_producer_list', {'id': producer.user.id}) }}" class="btn btn-outline-info m-1 p-1" data-toggle='tooltip' data-placement='top' title='Voir les livraisons'>
+
+								<i class="far fa-eye fa-2x"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">Aucun livraison prévue</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ parent() }}Page introuvable
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-10 text-center">
+				<h1>Oups ! La page demandée n'existe pas !</h1>
+				<br>
+				<img src="{{asset('images/404.png')}}" alt="erreur 404">
+				<br>
+				<a href="{{ path('home') }}" class="btn btn-outline-primary">Retour à l'accueil</a>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

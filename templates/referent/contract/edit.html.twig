@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Modifier un Contrat producteur
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_contract_index') }}">
+
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des contrats producteurs</a>
+	<h1 class="text-center my-5 title-effect">Modifier un contrat producteur</h1>
+	<h4 class="pb-4 text-center">{{contract.fullName}}</h4>
+
+
+	{{ include('referent/contract/_form.html.twig', {'button_label': 'Mettre à jour le contrat', 'button_class' : 'btn-outline-success'}) }}
+
+{% endblock %}

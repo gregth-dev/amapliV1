@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Gestion des livraisons
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Les livraisons</h1>
+	{% include "referent/order_product/_links_deliveries.html.twig" %}
+	<div class="row justify-content-center">
+		<div class="col-6">
+			<input class="form-control my-3 searchBar" placeholder="Rechercher un adhérent" data="{{path('search_members')}}">
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Adhérent</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for member in pagination.data %}
+						<tr>
+							<td>{{ member.id }}</td>
+							<td>{{ member.fullName }}</td>
+							<td>
+								<a href="{{ path('referent_order_list', {'id': member.id}) }}" data-toggle='tooltip' data-placement='top' title='Voir les livraisons' class="btn btn-outline-info m-1 p-1">
+									<i class="far fa-eye fa-2x"></i>
+								</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="4">Aucun livraison prévue</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{pagination.render()}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/search/searchDeliveriesMembers.js')}}"></script>
+{% endblock %}

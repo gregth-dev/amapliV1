@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Enregistrer un nouveau producteur
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_producer_index') }}">
+
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des producteurs</a>
+	<h1 class="text-center my-5 title-effect">Ajouter un producteur</h1>
+
+
+	{{ include('referent/producer/_form.html.twig') }}
+
+{% endblock %}

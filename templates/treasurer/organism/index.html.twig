@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Liste des associations
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('treasurer_subscription_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour aux adhésions</a>
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des associations</h1>
+	<div class="row my-3">
+		<div class="col-3">
+			<a href="{{ path('treasurer_organism_new') }}" class="btn btn-outline-primary ml-5">
+				<i class="fas fa-plus-circle"></i>
+				Ajouter une association
+			</a>
+		</div>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Nom</th>
+				<th>Montant</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for organism in organisms %}
+				<tr>
+					<td>{{ organism.id }}</td>
+					<td>{{ organism.name }}</td>
+					<td>{{ organism.amount }}
+						€</td>
+					<td>
+						<a href="{{ path('treasurer_organism_edit', {'id': organism.id}) }}" class="btn btn-outline-primary my-1 p-1" data-toggle='tooltip' data-placement='top' title='Modifier'>
+							<i class="far fa-edit fa-2x"></i>
+						</a>
+						<a href="{{ path('treasurer_organism_delete', {'id': organism.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ organism.id) }}" class="btn btn-outline-danger my-1 p-1" data-delete-text="cette association" data-toggle='tooltip' data-placement='top' title='Supprimer'>
+							<i class="far fa-trash-alt fa-2x"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

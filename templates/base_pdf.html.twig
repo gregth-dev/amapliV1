@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Escalamap -
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<style type="text/css">
+				body {
+					font-family: Arial;
+					font-size: 8pt;
+				}
+				table {
+					border: 1px solid #ccc;
+					border-collapse: collapse;
+				}
+				table th {
+					background-color: #F7F7F7;
+					color: #333;
+					font-weight: bold;
+				}
+				table th,
+				table td {
+					padding: 5px;
+					border: 1px solid #ccc;
+				}
+				.text-center {
+					text-align: center;
+				}
+			</style>
+		{% endblock %}
+	</head>
+	<body>
+		{% block nav %}
+			{% include "partials/header_pdf.html.twig" %}
+		{% endblock %}
+		<div class="container-fluid"> {% block body %}{% endblock %}
+			</div>
+
+		</body>
+	</html>

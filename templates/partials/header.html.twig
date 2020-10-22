@@ -1,0 +1,190 @@
+{% block nav %}
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="{{path('home')}}"><img src="{{asset('images/logo_nav.png')}}" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarColor02">
+			<ul class="navbar-nav mr-auto fade-down">
+				{% if is_granted('ROLE_MEMBER') %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Espace adhérent
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path('contract_member_index')}}">
+								<i class="fas fa-file-signature"></i>
+								Mes contrats
+							</a>
+							<a class="dropdown-item" href="{{path('order_list')}}">
+								<i class="fas fa-shopping-basket"></i>
+								Mes livraisons
+							</a>
+							<a class="dropdown-item" href="{{path('permanence_index')}}">
+								<i class="far fa-calendar-check"></i>
+								Les permanences
+							</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="{{path('member_index')}}">Les adhérents</a>
+							<a class="dropdown-item" href="{{path('producer_products')}}">Les produits</a>
+							<a class="dropdown-item" href="{{path('referent_index')}}">Les référents</a>
+						</div>
+					</li>
+				{% endif %}
+				{% if is_granted('ROLE_PRODUCER') %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Espace producteur
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path('producer_members')}}">
+								<i class="fas fa-file-signature"></i>
+								Mes adhérents</a>
+							<a class="dropdown-item" href="{{path('payment_list_payments')}}">
+								<i class="fas fa-euro-sign"></i>
+								Mes paiements</a>
+							<a class="dropdown-item" href="{{path('producer_orders_index')}}">
+								<i class="fas fa-shopping-basket"></i>
+								Mes livraisons</a>
+							<a class="dropdown-item" href="{{path('editdoc_orders_producer_pdf')}}">
+								<i class="fas fa-print"></i>
+								Imprimer une feuille de livraison</a>
+						</div>
+					</li>
+				{% endif %}
+				{% if is_granted('ROLE_REFERENT') %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Espace référent
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path('referent_dashboard_index')}}">
+								<i class="fas fa-chart-line"></i>
+								Tableau de bord</a>
+							<a class="dropdown-item" href="{{path('referent_member_index')}}">
+								<i class="fas fa-users"></i>
+								Gestion des adhérents</a>
+							<a class="dropdown-item" href="{{path('referent_producer_index')}}">
+								<i class="fas fa-tractor"></i>
+								Gestion des producteurs</a>
+							<a class="dropdown-item" href="{{path('referent_producer_products')}}">
+								<i class="fas fa-apple-alt"></i>
+								Gestion des produits</a>
+							<a class="dropdown-item" href="{{path('referent_contract_index')}}">
+								<i class="fas fa-file-signature"></i>
+								Contrats producteurs</a>
+							<a class="dropdown-item" href="{{path('referent_contract_member_index')}}">
+								<i class="fas fa-file-signature"></i>
+								Contrats adhérents</a>
+							<a class="dropdown-item" href="{{path('referent_payment_index_member')}}">
+								<i class="fas fa-euro-sign"></i>
+								Gestion des paiements</a>
+							<a class="dropdown-item" href="{{path('referent_order_list_member')}}">
+								<i class="fas fa-shopping-basket"></i>
+								Gestion des livraisons</a>
+							<a class="dropdown-item" href="{{path('referent_permanence_index')}}">
+								<i class="far fa-calendar-check"></i>
+								Gestion des permanences</a>
+							<a class="dropdown-item" href="{{path('referent_document_index')}}">
+								<i class="far fa-file-alt"></i>
+								Gestion des documents</a>
+							<a class="dropdown-item" href="{{path('referent_dashboard_archive')}}">
+								<i class="fas fa-archive"></i>
+								Contrats archivés</a>
+							<a class="dropdown-item" href="{{path('editdoc_emargement_pdf')}}">
+								<i class="fas fa-print"></i>
+								Editer une feuille d'émargement</a>
+						</div>
+					</li>
+				{% endif %}
+				{% if is_granted('ROLE_TREASURER') %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Espace trésorier
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path('treasurer_subscription_index')}}">
+								<i class="fas fa-file-invoice-dollar"></i>
+								Gestion des adhésions</a>
+							<a class="dropdown-item" href="{{path('treasurer_organism_index')}}">
+								<i class="fas fa-file-invoice-dollar"></i>
+								Gestion des associations</a>
+							<a class="dropdown-item" href="{{path('treasurer_donation_index')}}">
+								<i class="fas fa-file-invoice-dollar"></i>
+								Gestion des donations</a>
+						</div>
+					</li>
+				{% endif %}
+				{% if is_granted('ROLE_ADMIN') %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Espace Administrateur
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path('admin_referent_index')}}">
+								<i class="fas fa-users"></i>
+								Gestion des référents</a>
+							<a class="dropdown-item" href="{{path('admin_treasurer_index')}}">
+								<i class="fas fa-users"></i>
+								Gestion des trésoriers</a>
+							<a class="dropdown-item" href="{{path('admin_admin_index')}}">
+								<i class="fas fa-users"></i>
+								Gestion des administrateurs</a>
+							<a class="dropdown-item" href="{{path('admin_htaccess_create')}}">
+								<i class="fas fa-users"></i>
+								Gestion des accès</a>
+						</div>
+					</li>
+				{% endif %}
+				{% if is_granted('ROLE_REFERENT') %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('email_new')}}">
+							<i class="fas fa-mail-bulk"></i>
+							Envoi d'email</a>
+					</li>
+				{% endif %}
+				<li class="nav-item ml-5">
+					<a class="nav-link" href="http://amapli.gregorythorel.me" target="_blank">
+						<i class="fas fa-book"></i>
+						Documentation</a>
+				</li>
+			</li>
+		</ul>
+		<ul class="navbar-nav mr-5 fade-down">
+			{% if is_granted('ROLE_MEMBER') %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{app.user.membertype}}
+						<br>
+						{{app.user.firstName|capitalize}}
+						{{app.user.lastName|capitalize}}
+						<br>
+						<i class="far fa-user"></i>
+						Mon compte
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="{{path('member_account_identity')}}">
+							<i class="far fa-id-card"></i>
+							Mes coordonnées</a>
+						<a class="dropdown-item" href="{{path('member_account_email')}}">
+							<i class="fas fa-at"></i>
+							Mon email</a>
+						<a class="dropdown-item" href="{{path('member_account_password')}}">
+							<i class="fas fa-key"></i>
+							Mon mot de passe</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="{{path('app_logout')}}">Se Déconnecter
+							<i class="fas fa-sign-out-alt"></i>
+						</a>
+					</div>
+				</li>
+			{% else %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{path('app_login')}}">
+						<i class="fas fa-sign-in-alt"></i>
+						Se Connecter</a>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+</nav>{% endblock %}

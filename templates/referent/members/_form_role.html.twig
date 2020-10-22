@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit" class="btn {{ button_class|default('btn-outline-success') }} my-4">
+	<i class="far fa-save"></i>
+	{{ button_label|default("Mettre à jour l'adhérent") }}</button>
+
+{{ form_end(form) }}

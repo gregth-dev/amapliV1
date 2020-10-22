@@ -1,0 +1,6 @@
+{% if contractMember.status != 'actif' %}
+	<a href="{{ path('referent_contract_member_delete', {'id': contractMember.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ contractMember.id) }}" class="btn btn-outline-primary my-1 p-1" id="deleteBtn{{ contractMember.id }}" data-redirect="on" link-redirect="{{ path('referent_contract_member_index')}}" data-delete-text="ce contrat adhérent">
+
+		<i class="far fa-times-circle"></i>
+		Annuler</a>
+{% endif %}

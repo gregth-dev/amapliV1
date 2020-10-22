@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Liste des paiements
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Liste des paiements</h1>
+	{{ include('referent/payment/_links_payment.html.twig') }}
+	<div class="row my-3">
+		<div class="col-md-6">
+			Affiche la liste des paiements par producteur et par période.
+		</div>
+	</div>
+	{{ form_start(form) }}
+	<div class="row align-items-center">
+		<div class="col-3">
+			{{ form_row(form.producer) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.status) }}
+		</div>
+		<div class="col-2">
+			{{ form_row(form.startDate) }}
+		</div>
+		<div class="col-2">
+			{{ form_row(form.endDate) }}
+		</div>
+		<div class="col-2 form-group">
+			<button type="submit" class="btn {{ button_class|default('btn-outline-primary') }} my-4">
+				<i class="fas fa-search"></i>
+			</button>
+		</div>
+	</div>
+	{{ form_end(form) }}
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Adhérent</th>
+				<th>Numéro de chèque</th>
+				<th>Montant</th>
+				<th>date de dépôt</th>
+				<th>Statut</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for payment in payments %}
+				<tr>
+					<td>{{payment.id }}</td>
+					<td>{{payment.contractMember.subscriber.fullName }}</td>
+					<td>{{payment.checkNumber }}</td>
+					<td>{{payment.amount|number_format(2, ',', ' ') }}
+						€</td>
+					<td>{{payment.depositDate|date("d/m/Y") }}</td>
+					<td>
+						<span class="badge badge-pill {{payment.class}}" id="checkStatus{{payment.id }}">{{payment.status }}</span>
+					</td>
+					<td>
+						<a href="{{path('referent_payment_check', {'id':payment.id})}}" class="btn btn-outline-warning {% if payment.status == 'remis' %} disabled {% endif %} checkPayment my-1 p-2" id="{{payment.id }}" data-toggle='tooltip' data-placement='top' title='Remettre le paiement'>
+
+							<i class="fas fa-cash-register fa-2x"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucun paiement enregistré. Sélectionnez une date.</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/checkPayment.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Les contrats producteurs
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Contrats Producteurs</h1>
+	<div class="row my-3">
+		<a href="{{ path('referent_contract_new') }}" class="btn btn-outline-primary ml-5">
+			<i class="fas fa-plus-circle"></i>
+			Créer un contrat
+		</a>
+	</div>
+	{{paginationDate.renderByYear()}}
+	<div class="row justify-content-center">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>N°</th>
+						<th>Contrat</th>
+						<th>Producteur</th>
+						<th>Créé le</th>
+						<th>Année</th>
+						<th>Statut</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for contract in paginationDate.data %}
+						<tr>
+							<td>{{ contract.id }}</td>
+							<td>{{ contract.name|capitalize }}</td>
+							<td>{{ contract.producer.name|capitalize }}</td>
+							<td>{{ contract.createdAt|date('d-m-Y')}}</td>
+							<td>{{ contract.year }}</td>
+							<td id="archiveStatus{{ contract.id }}">{{ contract.status }}</td>
+							<td>
+								<a href="{{ path('contract_show', {'id': contract.id}) }}" class="btn btn-outline-info m-1 p-1" data-toggle='tooltip' data-placement='top' title='Consulter'>
+									<i class="far fa-eye fa-2x"></i>
+								</a>
+								{% if contract.status == 'actif' %}
+									<a href="{{ path('contract_edit', {'id': contract.id}) }}" class="btn btn-outline-primary m-1 p-1" data-toggle='tooltip' data-placement='top' title='Modifier'>
+										<i class="far fa-edit fa-2x"></i>
+									</a>
+								{% elseif contract.status == 'à archiver' %}
+									<a href="{{path('referent_contract_archive', {'id':contract.id})}}" class="btn btn-outline-warning {% if contract.status == 'archivé' %} disabled {% endif %} archive m-1 p-1" id="{{ contract.id }}" data-toggle='tooltip' data-placement='top' title='Archiver'>
+
+										<i class="fas fa-archive fa-2x"></i>
+									</a>
+
+								{% else %}
+									<a href="{{ path('contract_edit', {'id': contract.id}) }}" class="btn btn-outline-primary m-1 p-1" data-toggle='tooltip' data-placement='top' title='Modifier'>
+										<i class="far fa-edit fa-2x"></i>
+									</a>
+									<a href="{{ path('referent_contract_delete', {'id': contract.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ contract.id) }}" class="btn btn-outline-danger m-1 p-1" data-delete-text="ce contrat" data-toggle='tooltip' data-placement='top' title='Supprimer'>
+										<i class="far fa-trash-alt fa-2x"></i>
+									</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="8">Aucun contract enregistré</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+	<script src="{{asset('js/archive.js')}}"></script>
+{% endblock %}

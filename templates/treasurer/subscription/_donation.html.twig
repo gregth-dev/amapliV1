@@ -1,0 +1,33 @@
+{% block _subscription_donation_widget %}
+	{{ form_widget(form) }}
+	<div class="form-group">
+		<button type="button" id="add-donation" class="btn btn-primary">
+			<i class="fas fa-plus"></i>
+			Ajouter une donation
+		</button>
+	</div>
+{% endblock %}
+
+{% block _subscription_donation_entry_widget %}
+	<div class="form-group" id="block_{{id}}">
+		<div class="row">
+			<div class="col-10">
+				<div class="row">
+					<div class="col">
+						{{ form_widget(form.amount) }}
+						{{ form_errors(form.amount) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.payment) }}
+						{{ form_errors(form.payment) }}
+					</div>
+				</div>
+			</div>
+			<div class="col-2">
+				<button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-outline-danger">
+					<i class="far fa-trash-alt"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+{% endblock %}

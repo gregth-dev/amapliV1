@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Escalamap -
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+			<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+			<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js" defer></script>
+			<link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+			<link rel="stylesheet" href="{{asset('css/style.css')}}">
+			<link rel="stylesheet" href="{{asset('css/ns-default.css')}}">
+			<link rel="stylesheet" href="{{asset('css/ns-style-bar.css')}}">
+			<link rel="stylesheet" href="{{asset('css/ns-style-growl.css')}}">
+			<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/0.11.9/jquery.velocity.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" defer integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" defer integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous" charset="UTF-8"></script>
+			<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+			<script src="{{asset('js/modernizr.custom.js')}}"></script>
+			<script>
+				$(window).load(() => $(".se-pre-con").fadeOut("slow"));
+			</script>
+
+		{% endblock %}
+	</head>
+	<body>
+		<div class="se-pre-con"></div>
+		{% block nav %}
+			{% include "partials/header.html.twig" %}
+		{% endblock %}
+		<div id="page-container" class="container-sm"> {% block body %}{% endblock %}
+			</div>
+			{% block footer %}
+				{% include "partials/footer.html.twig" %}
+			{% endblock %}
+			{% block javascripts %}
+
+				<script src="{{asset('js/Tools.js')}}"></script>
+				<script src="{{asset('js/app.js')}}"></script>
+				<script src="{{asset('js/calendar.js')}}"></script>
+				<script src="{{asset('js/classie.js')}}"></script>
+				<script src="{{asset('js/notificationFx.js')}}"></script>
+				<script>
+					$(".js-select").select2({language: "fr"});
+				</script>
+
+			{% endblock %}
+			{% include "partials/_flash.html.twig" %}
+		</body>
+	</html>

@@ -1,0 +1,24 @@
+{% extends 'base_login.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Récupérer votre mot de passe
+{% endblock %}
+
+{% block body %}
+
+	<div class="container flex-around">
+		<div class="row justify-content-center">
+			<div class="col-md-5 text-center">
+				<a href="{{path('home')}}"><img src="{{asset('images/logo.png')}}" alt="Logo"></a>
+				<h3>Récupérer votre mot de passe</h3>
+				{{ form_start(form) }}
+				{{ form_widget(form) }}
+				<button class="btn btn-outline-primary">
+					{{ button_label|default('Envoyer') }}</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

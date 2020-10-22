@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Les contrats adhérents archivés
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Contrats adhérents archivés</h1>
+	<div class="row justify-content-md-center mb-3">
+		{% for year in years %}
+			<a href="{{path('referent_contract_member_index_archive', {'year':year})}}" class="btn btn-outline-info my-1 py-2 px-2">{{year}}</a>
+		{% endfor %}
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Contrat</th>
+				<th>Adhérent</th>
+				<th>Créé le</th>
+				<th>Année</th>
+				<th>Statut</th>
+				<th class="text-center"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for contractMember in pagination.dataArchive %}
+
+				<tr>
+					<td>{{ contractMember.id }}</td>
+					<td>{{ contractMember.contract.name }}</td>
+					<td>{{ contractMember.subscriber.fullName }}</td>
+					<td>{{ contractMember.createdAt|date('d-m-Y')}}</td>
+					<td>{{ contractMember.contract.year}}</td>
+					<td>{{ contractMember.contract.status }}</td>
+					<td>
+						<a href="{{ path('referent_contract_member_show', {'id': contractMember.id, archive:'archive'}) }}" class="btn btn-outline-info my-1 p-1" data-toggle='tooltip' data-placement='top' title='Consulter'>
+
+							<i class="far fa-eye fa-2x"></i>
+						</a>
+						<a href="{{ path('referent_payment_contractMember_payments', {'id': contractMember.id}) }}" class="btn btn-outline-info my-1 py-2 px-2" data-toggle='tooltip' data-placement='top' title='Paiements'>
+							<i class="fas fa-euro-sign fa-2x"></i>
+						</a>
+
+
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">Aucun contrat enregistré</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{pagination.renderArchive()}}
+
+{% endblock %}

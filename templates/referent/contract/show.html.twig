@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Consulter un contrat
+{% endblock %}
+
+{% block body %}
+	{% if contract.status != 'archivé' %}
+		<a href="{{ path('referent_contract_index') }}">
+			<i class="far fa-arrow-alt-circle-left mt-5"></i>
+			Retour à la liste
+		</a>
+	{% else %}
+		<a href="{{ path('referent_contract_index_archive', {'annee':contract.year}) }}">
+			<i class="far fa-arrow-alt-circle-left mt-5"></i>
+			Retour à la liste
+		</a>
+	{% endif %}
+	<div class="jumbotron mt-5">
+		<h1 class="display-3">
+			{{contract.name|capitalize}}
+			{{contract.year}}
+		</h1>
+		<p class="lead">
+			<div class="row">
+				<div class="col-3">
+					Créé le :
+					{{contract.createdAt|date("d/m/Y")}}
+				</div>
+				<div class="col-3">
+					Alerte email :
+					{% if contract.emailAuto %}
+						Active
+					{% else %}
+						Non active
+					{% endif %}
+				</div>
+			</div>
+		</p>
+		<hr class="my-4">
+		<div class="row">
+			<div class="col">
+				<h4>Détails :</h4>
+				<ul>
+					<li>Date de début des distributions :
+						{{contract.startDate|date("d/m/Y")}}</li>
+					<li>Date de fin des distributions :
+						{{contract.endDate|date("d/m/Y")}}</li>
+					<li>Statut du contrat :
+						{{contract.status}}</li>
+					<li>Type du contrat :
+						{% if contract.multidistribution %}
+							les produits peuvent varier en fonction des distributions
+						{% else %}
+							les produits ne varient pas en fonction des distributions
+						{% endif %}
+					</li>
+					<li>Nombre d'adhérent au contrat :
+						{{contract.contractMembers ? contract.contractMembers|length : 0}}
+					</li>
+					<li>Nombre de distributions prévues :
+						{{contract.deliveries|length}}</li>
+
+				</ul>
+			</div>
+			<div class="col">
+				<h4>Informations complémentaires :</h4>
+				<ul>
+					<li>{{contract.informations}}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<h4>Producteur :</h4>
+				<ul>
+					<li>
+						{{contract.producer.name|capitalize}}</li>
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Référent :</h4>
+				<ul>
+					<li>Prénom :
+						{{contract.producer.referent.firstName}}</li>
+					<li>Nom :
+						{{contract.producer.referent.lastName}}</li>
+				</ul>
+			</div>
+			<div class="col-4">
+				<h4>Suppléant :</h4>
+				<ul>
+					{% if contract.producer.substitute != null %}
+						<li>Prénom :
+							{{contract.producer.substitute.firstName}}</li>
+
+						<li>Nom :
+							{{contract.producer.substitute.lastName}}</li>
+
+					{% else %}
+						<li>aucun suppléant n'est défini pour ce contract.</li>
+					{% endif %}
+				</ul>
+			</div>
+			<div class="col-8">
+				<h4>Produits :</h4>
+				<table class="table">
+					<tbody>
+						{% for product in contract.producer.products %}
+							<tr>
+								<td>{{product.name}}</td>
+								<td>{{product.details}}</td>
+								<td>
+									{{product.price|number_format(2, ',', ' ')}}
+									€
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<ul></ul>
+			</div>
+		</div>
+		<h4>Dates des distributions</h4>
+		<div class="row mb-3">
+			<span class="badge badge-pill badge-success mr-2">Validée</span>
+			<span class="badge badge-pill badge-danger mr-2">Annulée</span>
+			<span class="badge badge-pill badge-warning mr-2">Reportée</span>
+			<span class="badge badge-pill badge-dark">A confirmer</span>
+		</div>
+		<div class="row">
+			{% for delivery in contract.deliveries %}
+				<div class="col-2">
+					{% if delivery.status %}
+						<span class="badge badge-pill {{delivery.class}}">{{delivery.date|date("d/m/Y")}}</span>
+					{% else %}
+						{{delivery.date|date("d/m/Y")}}
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+
+
+	{% endblock %}

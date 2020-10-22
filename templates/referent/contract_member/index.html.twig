@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contrat Adhérents
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Contrats Adhérents</h1>
+	<div class="row justify-content-center">
+		<div class="col-6">
+			<input class="form-control my-3 searchBar" placeholder="Rechercher un contrat" data="{{path('search_contract_members')}}">
+		</div>
+	</div>
+	<div class="row justify-content-start my-3">
+		<div class="col-3">
+			<a href="{{ path('referent_contract_member_new') }}" class="btn btn-outline-primary ml-5">
+				<i class="fas fa-plus-circle"></i>
+				Créer un contrat</a>
+		</div>
+		<div class="col-5">
+			<a href="{{ path('referent_contract_member_new_multiple') }}" class="btn btn-outline-primary ml-5">
+				<i class="fas fa-plus-circle"></i>
+				Créer des contrats multiples</a>
+		</div>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">N°</th>
+				<th scope="col">Contrat</th>
+				<th scope="col">Adhérent</th>
+				<th scope="col">Créé le</th>
+				<th scope="col">Statut</th>
+				<th scope="col">Solde</th>
+				<th scope="col">Expire le</th>
+				<th scope="col" class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for contractMember in pagination.data %}
+				{% if contractMember.status != 'archivé' %}
+					<tr>
+						<td>{{ contractMember.id }}</td>
+						<td>{{ contractMember.contract.fullName|capitalize }}</td>
+						<td>{{ contractMember.subscriber.fullName }}</td>
+						<td>{{ contractMember.createdAt|date("d/m/Y") }}</td>
+						<td>
+							{% if contractMember.status == 'à archiver' %}
+								<span class="badge badge-pill badge-warning">{{ contractMember.status }}</span>
+
+							{% else %}
+								{{ contractMember.statePayments }}
+							{% endif %}
+						</td>
+						<td>
+							<span class="badge badge-pill {{contractMember.statePaymentsClass}}">{{ contractMember.balance|number_format(2, ',', ' ') }}</td>
+						</td>
+						<td>{{ contractMember.contract.endDate|date("d/m/Y") }}</td>
+						<td>
+							{% if contractMember.status != 'non actif' %}
+								<a href="{{ path('referent_contract_member_show', {'id': contractMember.id}) }}" class="btn btn-outline-info my-1 p-1" id="showBtn{{ contractMember.id }}" data-toggle='tooltip' data-placement='top' title='Consulter'>
+									<i class="far fa-eye fa-2x"></i>
+								</a>
+								<a href="{{ path('referent_contract_member_payments', {'id': contractMember.id}) }}" class="btn btn-outline-info my-1 p-1 " id="paymentsBtn{{ contractMember.id }}" data-toggle='tooltip' data-placement='top' title='Ajouter un paiement'>
+									<i class="fas fa-cash-register fa-2x"></i>
+								</a>
+								<a href="{{ path('referent_payment_contractMember_payments', {'id': contractMember.id}) }}" class="btn btn-outline-info my-1 p-1 " id="paymentsBtn{{ contractMember.id }}" data-toggle='tooltip' data-placement='top' title='Paiements'>
+									<i class="fas fa-euro-sign fa-2x"></i>
+								</a>
+							{% endif %}
+							{% if contractMember.status == 'non actif' %}
+								<a href="{{ path('referent_contract_member_show', {'id': contractMember.id}) }}" class="btn btn-outline-info my-1 p-1" id="showBtn{{ contractMember.id }}" data-toggle='tooltip' data-placement='top' title='Consulter'>
+									<i class="far fa-eye fa-2x"></i>
+								</a>
+								<a href="{{ path('referent_contract_member_payments', {'id': contractMember.id}) }}" class="btn btn-outline-info my-1 p-1 " id="paymentsBtn{{ contractMember.id }}" data-toggle='tooltip' data-placement='top' title='Ajouter un paiement'>
+									<i class="fas fa-cash-register fa-2x"></i>
+								</a>
+								<a href="{{ path('referent_contract_member_delete', {'id': contractMember.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ contractMember.id) }}" class="btn btn-outline-danger my-1 p-1" id="deleteBtn{{ contractMember.id }}" data-toggle='tooltip' data-placement='top' title='Supprimer le contrat adhérent' data-delete-text="ce contrat adhérent">
+									<i class="far fa-trash-alt fa-2x"></i>
+								</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endif %}
+			{% else %}
+				<tr>
+					<td colspan="4">Aucun contrat enregistré</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{pagination.render()}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+	<script src="{{asset('js/search/searchContractMembers.js')}}"></script>
+
+{% endblock %}

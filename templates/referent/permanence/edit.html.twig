@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Modifier une permanence
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_permanence_index') }}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des permanences</a>
+	<h1 class="text-center my-5 title-effect">Modifier une permanence</h1>
+	{{ include('referent/permanence/_form.html.twig', {'button_label': 'Mettre à jour la permanence', 'button_class' : 'btn-outline-success'}) }}
+{% endblock %}

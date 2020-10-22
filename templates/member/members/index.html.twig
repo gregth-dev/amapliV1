@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Les adhérents
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Les adhérents</h1>
+
+	<div class="row justify-content-center">
+		<div class="col-6">
+			<input class="form-control my-3 searchBar" placeholder="Rechercher un adhérent" data="{{path('search_members')}}">
+		</div>
+	</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Adhérents</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for member in pagination.data %}
+				<tr>
+					<td>{{ member.fullName }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="12">Pas d'adhérents enregistrés</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{pagination.render()}}
+
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/search/searchMembers.js')}}"></script>
+{% endblock %}

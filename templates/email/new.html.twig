@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Envoyer un mail
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center my-5 title-effect">Envoyer un mail</h1>
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			{{ include('email/_form.html.twig') }}
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$(document).ready(function () {
+$('input[type="file"]').change(function (e) {
+var fileName = e.target.files[0].name;
+let label = document.querySelector('.custom-file-label');
+label.innerHTML = fileName;
+});
+
+});
+	</script>
+{% endblock %}

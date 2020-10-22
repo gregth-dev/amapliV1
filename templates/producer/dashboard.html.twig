@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Tableau de bord
+{% endblock %}
+
+{% block body %}
+	<h3 class="text-center my-3 title-effect">Bienvenue
+
+		{{app.user.firstName|capitalize}}</h3>
+	<div class="row justify-content-around my-5">
+		<div class="card bg-info text-white mb-3 mr-3" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>Mes Adhérents</h4>
+			</div>
+			<a href="{{path('producer_members')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="fas fa-file-signature fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+		<div class="card bg-warning text-white mb-3 mr-3" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>Mes paiements</h4>
+			</div>
+			<a href="{{path('payment_list_payments')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="far fa-calendar-check fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="row justify-content-around my-5">
+		<div class="card bg-success text-white mb-3 mr-3" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>Mes livraisons</h4>
+			</div>
+			<a href="{{path('producer_orders_index')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="fas fa-shopping-basket fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+		<div class="card bg-primary text-white mb-3 mr-3" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>Editer des
+					<br>
+					livraisons</h4>
+			</div>
+			<a href="{{path('editdoc_orders_producer_pdf')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="far fa-calendar-check fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+	</div>
+{% endblock %}

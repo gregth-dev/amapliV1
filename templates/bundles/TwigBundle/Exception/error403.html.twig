@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ parent() }}Accès interdit
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Accès non autorisé</h1>
+		<div class="alert alert-danger font-weight-bold text-center">
+			<p>Vous ne pouvez pas accèder à cette ressource</p>
+		</div>
+		<div class="row justify-content-center">
+			<img src="{{asset('images/403.png')}}" alt="erreur 404">
+		</div>
+		<br>
+		<a href="{{ path('home') }}" class="btn btn-outline-primary">Retour à l'accueil</a>
+	</div>
+
+{% endblock %}

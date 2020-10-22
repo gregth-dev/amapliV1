@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Mes adhérents
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Mes adhérents</h1>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Nom de l'adhérent</th>
+				<th scope="col">Date de souscription</th>
+				<th scope="col">Montant du contrat</th>
+				<th scope="col">Restant dû</th>
+				<th scope="col">Nombre de livraison</th>
+				<th scope="col" class="text-center">Détails des commandes</th>
+				<th scope="col" class="text-center">Statut du contrat</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for contratAdherent in pagination.data %}
+				<tr class="table-light">
+					<td>{{contratAdherent.subscriber.fullName}}</td>
+					<td>{{contratAdherent.createdAt|date("d/m/Y")}}</td>
+					<td>{{contratAdherent.totalAmount|number_format(2, ',', ' ')}}</td>
+					<td>{{contratAdherent.balance|number_format(2, ',', ' ')}}</td>
+					<td>{{contratAdherent.totalDeliveries}}</td>
+					<td class="text-center">
+						<ul>
+							{% for order in contratAdherent.orders %}
+								<li>{{order.quantity}}
+									{{order.product.name}}
+									<br>
+									{{order.product.details}}
+								</li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>{{contratAdherent.status}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{pagination.render()}}
+{% endblock %}

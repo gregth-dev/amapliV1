@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une permanence
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_permanence_index') }}">
+
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des permanences</a>
+	<h1 class="text-center my-5 title-effect">Désinscrire des participants</h1>
+
+	{{ form_start(form) }}
+	<div class="row">
+		<div class="col-4">
+			{{ form_row(form.participants) }}
+		</div>
+	</div>
+	<button type="submit" class="btn {{ button_class|default('btn-outline-success') }} my-4">
+		<i class="far fa-save"></i>
+		{{ button_label|default('Mettre à jour les participants') }}</button>
+
+	{{ form_end(form) }}
+
+
+{% endblock %}

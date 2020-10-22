@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ parent() }}liste des livraisons
+{% endblock %}
+
+{% block body %}
+	<a href="{{path('referent_order_list_member')}}">
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des adhérents</a>
+	<h1 class="text-center mt-5 mb-5 title-effect">Les livraisons</h1>
+	{% include "referent/order_product/_links_deliveries.html.twig" %}
+	<h2 class="h6">Adhérent :
+		{{paginationDate.user.fullName}}</h2>
+	{{paginationDate.renderWithUser()}}
+	<div class="row justify-content-md-center mt-5">
+		{% for key, date in paginationDate.data %}
+			<div class="card {% if 'Annulée' in key %}bg-danger{% elseif 'A Confirmer' in key %}bg-dark{% elseif 'Reportée' in key %}bg-warning{% else %}bg-info{% endif %} text-white mb-5 mr-4" style="max-width: 20rem;">
+				<div class="card-header">Le
+					{{key}}</div>
+				<div class="card-body">
+					<p class="card-text">
+						<ul>
+							{% for order in date %}
+								{% if order.contractMember.status == 'actif' %}
+									<li>
+										<i class="fas fa-angle-right"></i>
+										{{order.product.fullName}}
+										<br>
+										Quantité :
+										{{order.quantity}}
+									</li>
+								{% elseif "Aucun" in order.contractMember.status %}
+									<li>
+										<i class="fas fa-angle-right"></i>
+										{{order.product.fullName}}
+										<br>
+										Quantité :
+										{{order.quantity}}
+										<br>
+										<span class="badge badge-pill badge-danger">Commande en attente de paiement</span>
+									</li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</p>
+				</div>
+			</div>
+		{% else %}
+			<div class="col text-center">
+				Aucune livraison prévue
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

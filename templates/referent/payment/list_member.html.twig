@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Gestion des paiements
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des paiements</h1>
+	<div class="row justify-content-center">
+		<div class="col-6">
+			<input class="form-control my-3 searchBar" placeholder="Rechercher un adhérent" data="{{path('search_payments_contracts', {'id':contract.id})}}">
+		</div>
+	</div>
+	<div class="row justify-content-center d-flex my-3">
+		<div class="col-6">
+			<h4 class="text-center">{{contract.fullName|capitalize}}</h4>
+		</div>
+	</div>
+	{{ include('referent/payment/_links_payment.html.twig') }}
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>N° du contrat</th>
+						<th>Adhérent</th>
+						<th class="text-center"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for contractMember in pagination.data %}
+						<tr>
+							<td>{{ contractMember.id }}</td>
+							<td>{{ contractMember.subscriber.fullName }}</td>
+							<td>
+								<a href="{{ path('referent_payment_contractMember_payments', {'id': contractMember.id}) }}" data-toggle='tooltip' data-placement='top' title='Voir les paiements' class="btn btn-outline-info my-1 p-1">
+									<i class="far fa-eye fa-2x"></i>
+								</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="4">Aucun adhérent enregistré pour ce contrat</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{pagination.render(contract.id)}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/search/searchPaymentsContracts.js')}}"></script>
+{% endblock %}

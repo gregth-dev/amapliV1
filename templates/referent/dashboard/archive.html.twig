@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Les contrats archivés
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des contrats archivés</h1>
+	<div class="row my-5 justify-content-around">
+		<div class="card bg-warning text-white" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>{{totalContracts}}
+					{% if totalContracts > 1 %}
+						Contrats Producteurs
+					{% else %}
+						Contrat Producteur
+					{% endif %}
+				</h4>
+			</div>
+			<a href="{{path('referent_contract_index_archive')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="fas fa-archive fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+		<div class="card bg-warning text-white" style="min-width: 12rem;">
+			<div class="card-header text-center">
+				<h4>{{totalContractMembers}}
+					{% if totalContractMembers > 1 %}
+						Contrats Adhérents
+					{% else %}
+						Contrat Adhérent
+					{% endif %}
+				</h4>
+			</div>
+			<a href="{{path('referent_contract_member_index_archive')}}" class="dashLink">
+				<div class="card-body align-items-center d-flex justify-content-center">
+					<p class="card-text">
+						<i class="fas fa-archive fa-5x"></i>
+					</p>
+				</div>
+			</a>
+		</div>
+	</div>
+
+{% endblock %}

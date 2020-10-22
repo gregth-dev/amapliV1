@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('referent_document_delete', {'id': document.id}) }}" onsubmit="return confirm('Supprimer le document ?');">
+	<input type="hidden" name="_method" value="DELETE">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ document.id) }}">
+	<button class="btn">Delete</button>
+</form>

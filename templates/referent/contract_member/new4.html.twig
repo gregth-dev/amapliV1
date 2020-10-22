@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau contrat adhérent
+
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center my-5 title-effect">Créer un contrat adhérent</h1>
+	<div class="row pb-4">
+		<div class="col-3">
+			<div class="alert-light pl-2">
+				<h2 class="h6">{{contractMember.contract.fullName}}</h2>
+				<hr>
+				<h2 class="h6">{{contractMember.subscriber.fullName}}</h2>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="alert-light pl-2">
+				<h2 class="h6">Distribution(s) du contrat :</h2>
+				<hr>
+				<h2 class="h6">{{contractMember.contract.deliveries|length}}</h2>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="alert-light pl-2">
+				<h2 class="h6">Distribution(s) choisie(s) :</h2>
+				<hr>
+				<h2 class="h6">{{contractMember.totalDeliveries}}</h2>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="alert-light pl-2">
+				<h2 class="h6">Montant du contrat :</h2>
+				<hr>
+				<h2 class="h6">
+					{{(contractMember.amountOrders + contractMember.amountDeposit)|number_format(2, ',', ' ')}}
+					€ TTC
+					{% if contractMember.amountDeposit %}
+						<br>dont caution de
+						{{contractMember.amountDeposit|number_format(2, ',', ' ')}}€ TTC
+					{% endif %}
+				</h2>
+			</div>
+		</div>
+	</div>
+	<h2 class="h6">Produit(s) commandé(s) :</h2>
+	<div class="row">
+		{% for order in contractMember.orders %}
+			{% set deliveryNumber = contractMember.totalDeliveries %}
+
+
+			<div class="col-3">
+				<div class="alert-light pl-2">
+					<ul>
+						<li>
+							<i class="far fa-arrow-alt-circle-right"></i>
+							{{order.product.name}}
+							{{order.product.details}}
+
+							<br>
+							{% if order.product.deposit %}
+								Caution :
+								{{order.product.deposit|number_format(2, ',', ' ')}}
+								€<br>
+							{% endif %}
+							<strong>{{order.quantity}}
+								x
+								{{order.product.price|number_format(2, ',', ' ')}}
+								€ TTC
+								<br>
+								pour
+								{{deliveryNumber}}
+								livraisons
+								<br>
+								Soit un total de :
+								{{(order.product.price * deliveryNumber)|number_format(2, ',', ' ')}}
+								€
+							</strong>
+						</li>
+					</ul>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+
+	{% if error %}
+		<div class='alert alert-danger'>
+			<p>
+				Total commandes :
+				{{contractMember.amountOrders|number_format(2, ',', ' ')}}
+				€
+				{% if contractMember.amountDeposit %}
+					<br>Total cautions :
+					{{(contractMember.amountDeposit)|number_format(2, ',', ' ')}}€
+				{% endif %}
+				<br>Total paiements :
+				{{contractMember.amountPayments|number_format(2, ',', ' ')}}€
+			</p>
+			<p>Il y a une erreur de
+				{% if (contractMember.amountOrders + contractMember.amountDeposit) > contractMember.amountPayments %}
+
+					{{((contractMember.amountOrders + contractMember.amountDeposit) - contractMember.amountPayments)|number_format(2, ',', ' ') }}
+				{% else %}
+					{{(contractMember.amountPayments - (contractMember.amountOrders + contractMember.amountDeposit))|number_format(2, ',', ' ') }}
+				{% endif %}
+				€ entre le montant des commandes et les paiements enregistrés
+			</p>
+		</div>
+	{% endif %}
+	{% if contractMember.status == 'actif' %}
+		{{ include('referent/contract_member/_form4.html.twig', {'button_label': 'Mettre à jour les paiements', 'button_class' : 'btn-outline-success'}) }}
+	{% else %}
+		{{ include('referent/contract_member/_form4.html.twig') }}
+	{% endif %}
+	{% if contractMember.status != 'non actif' and contractMember.balance != 0 %}
+		<div class="row my-3">
+			<a href="{{ path('referent_contract_member_index') }}">
+				<i class="far fa-arrow-alt-circle-left"></i>
+				Retour à la liste des contrats</a>
+		</div>
+	{% endif %}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/delete.js')}}"></script>
+{% endblock %}

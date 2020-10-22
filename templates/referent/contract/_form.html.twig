@@ -1,0 +1,29 @@
+{% form_theme form 'referent/contract/_delivery.html.twig' %}
+
+{{ form_start(form) }}
+<div class="row">
+	<div class="col-4">{{ form_row(form.name) }}</div>
+
+	<div class="col-4">{{ form_row(form.producer, {'label':'Choisir un producteur :'}) }}</div>
+
+</div>
+<div class="row">
+	<div class="col-3">{{ form_row(form.frequency) }}</div>
+	<div class="col-3">{{ form_row(form.startDate) }}</div>
+	<div class="col-3">{{ form_row(form.endDate) }}</div>
+
+</div>
+<div class="row">
+	<div class="col-6">{{ form_row(form.informations)}}</div>
+	<div class="col-6">{{ form_row(form.multidistribution)}}</div>
+</div>
+<div class="row">
+	<div class="col-5">{{ form_row(form.emailAuto)}}</div>
+	<div class="col-5">{{ form_row(form.frequencyEmailAuto)}}</div>
+</div>
+{{ form_row(form.deliveries, {'label':' '}) }}
+<button type="submit" class="btn {{ button_class|default('btn-outline-primary') }} my-4">
+	<i class="far fa-save"></i>
+	{{ button_label|default('Enregistrer le contrat') }}</button>
+
+{{ form_end(form) }}

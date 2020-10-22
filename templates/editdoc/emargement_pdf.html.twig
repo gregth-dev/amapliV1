@@ -1,0 +1,46 @@
+{% extends 'base_pdf.html.twig' %}
+
+{% block title %}
+	Emargement des distributions
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Emargement des distributions</h1>
+	<h2>{{producer}}</h2>
+	<br><br>
+
+
+	<table class="table">
+
+		<tr>
+			<th>Adhérent</th>
+
+			{% for date in dates %}
+				<th colspan="2" class="col">{{date|date("d-m")}}</th>
+			{% endfor %}
+		</tr>
+		{% for subscriber, datesProduct in list %}
+			<tr>
+				<th scope="row" class="col">{{subscriber}}</th>
+
+				{% for date in dates %}
+					<td style="font-size=8px">
+
+						{% for dateProduct, products in datesProduct %}
+							{% if date == dateProduct %}
+								{% for product, quantity in products %}
+									{{product}}
+									/ Qté :
+									{{quantity}}
+									<br>
+								{% endfor %}
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+	<br><br><br><br>
+{% endblock %}

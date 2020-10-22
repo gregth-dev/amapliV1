@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}Les adhérents
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Gestion des adhérents</h1>
+	<div class="row justify-content-center">
+		<div class="col-6"><input class="form-control my-3 searchBar" placeholder="Rechercher un adhérent" data="{{path('search_referent_members')}}">
+		</div>
+	</div>
+	<a href="{{ path('referent_member_new') }}" class="btn btn-outline-primary my-2">
+		<i class="fas fa-plus-circle"></i>
+		Ajouter un adhérent</a>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Adhérents</th>
+				<th>Rôle</th>
+				<th>Inscrit le</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in pagination.data %}
+				{% if user != app.user %}
+					<tr>
+						<td>{{ user.id }}</td>
+						<td>{{ user.fullName }}</td>
+						<td>{{ user.memberType }}</td>
+						<td>{{ user.createdAt|date("d/m/Y") }}</td>
+						<td>
+							<a href="{{ path('referent_member_show', {'id': user.id}) }}" class="btn btn-outline-info my-1 p-1" data-toggle="tooltip" data-placement="top" title="Consulter">
+								<i class="far fa-eye fa-2x"></i>
+							</a>
+							<a href="{{ path('referent_member_edit', {'id': user.id}) }}" class="btn btn-outline-info my-1 p-1" data-toggle="tooltip" data-placement="top" title="Modifier">
+								<i class="far fa-edit fa-2x"></i>
+							</a>
+
+							{% if is_granted('ROLE_ADMIN') %}
+								<a href="{{path('referent_member_edit_role', {'id':user.id})}}" class="btn btn-outline-primary my-1 p-1" data-toggle="tooltip" data-placement="top" title="Modifier le rôle">
+
+									<i class="fas fa-user-tag fa-2x"></i>
+								</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{{pagination.render()}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/search/searchReferentMembers.js')}}"></script>
+	<script src="{{asset('js/delete.js')}}"></script>
+	<script type="text/javascript">
+		$(function () {
+$("[data-toggle='tooltip']").tooltip();
+
+});
+	</script>
+
+{% endblock %}

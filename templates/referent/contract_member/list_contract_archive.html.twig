@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Les contrats adhérents à archiver
+{% endblock %}
+
+{% block body %}
+	<div class="row mt-3">
+		<a href="{{ path('referent_contract_index_archive') }}">
+			<i class="far fa-arrow-alt-circle-left"></i>
+			Retour à la liste des contrats</a>
+	</div>
+	<h1 class="text-center mt-5 mb-5 title-effect">Contrats adhérents à archiver</h1>
+	<div class="row mb-3">
+		<div class="col-3">
+			<a href="{{ path('referent_contract_member_archive_list', {'id': contract.id}) }}" class="btn btn-outline-warning my-1 p-1">
+				<i class="fas fa-archive"></i>
+				Archiver tous les contrats</a>
+		</div>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Contrat de référence</th>
+				<th>Adhérent</th>
+				<th>Créé le</th>
+				<th>Année</th>
+				<th>Statut du contrat</th>
+				<th></th>
+			</tr>
+		</thead>
+
+
+		<tbody>
+			{% for contractMember in pagination.data %}
+				<tr>
+					<td>{{ contractMember.id }}</td>
+					<td>{{ contractMember.contract.name }}</td>
+					<td>{{ contractMember.subscriber.fullName }}</td>
+					<td>{{ contractMember.createdAt|date('d-m-Y')}}</td>
+					<td>{{ contractMember.contract.year}}</td>
+					<td id="archiveStatus{{ contractMember.id }}">{{ contractMember.status }}</td>
+					<td>
+						<a href="{{path('referent_contract_member_archive', {'id':contractMember.id})}}" class="btn btn-outline-warning {% if contractMember.status == 'archivé' %} disabled {% endif %} archive" id="{{ contractMember.id }}">Archiver</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">Aucun contrat à archiver</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{pagination.render(contract.id)}}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('js/archive.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% form_theme form 'referent/contract_member/_order.html.twig' %}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<div class="row justify-content-end">
+	<div class="col-3">
+		<button type="submit" class="btn {{ button_class|default('btn-outline-primary') }} my-4">
+			{{ button_label|default('Etape suivante') }}
+			<i class="fas fa-arrow-right"></i>
+		</button>
+	</div>
+</div>
+{{ form_end(form) }}
+<div class="row justify-content-start">
+	<div class="col-3">
+		{{ include('referent/contract_member/_delete_form.html.twig') }}
+
+	</div>
+</div>

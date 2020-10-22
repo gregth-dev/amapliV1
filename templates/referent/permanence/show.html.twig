@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Permanence
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('referent_permanence_index') }}">
+
+		<i class="far fa-arrow-alt-circle-left mt-5"></i>
+		Retour à la liste des permanences</a>
+	<h1 class="text-center my-5 title-effect">Consulter une permanence</h1>
+	<div class="jumbotron mt-5">
+
+		<p class="lead">
+			<div class="row">
+				<div class="col-3">
+					Créé le :
+					{{permanence.createdAt|date("d/m/Y")}}
+
+				</div>
+			</div>
+		</p>
+		<hr class="my-4">
+		<div class="row">
+			<div class="col">
+				<h4>Détails :</h4>
+				<ul>
+					<li>Date de la permanence :
+						{{permanence.date|date("d/m/Y")}}</li>
+					<li>Nombre de places :
+						{{permanence.numberPlaces}}</li>
+					<li>Nombre d'inscrit :
+						{{permanence.participants|length}}</li>
+				</ul>
+			</div>
+			<div class="col">
+				<h4>Liste des participants :</h4>
+				<ul>
+					{% for participant in permanence.participants %}
+						<li>{{participant.fullName}}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col">
+				<h4>Informations complémentaires :</h4>
+				<ul>
+					<li>{{permanence.informations}}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}

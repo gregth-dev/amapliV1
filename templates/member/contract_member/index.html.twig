@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Contrats
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-5 mb-5 title-effect">Mes Contrats</h1>
+
+	<div class="row justify-content-between my-3"></div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">N°</th>
+				<th scope="col">Contrat</th>
+				<th scope="col">Créé le</th>
+				<th scope="col">Statut</th>
+				<th scope="col">Reste à payer</th>
+				<th scope="col">Expire le</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for contractMember in contractMembers %}
+				{% if contractMember.status != 'archivé' %}
+					<tr>
+						<td>{{ contractMember.id }}</td>
+						<td>{{ contractMember.contract.name|capitalize }}</td>
+						<td>{{ contractMember.createdAt|date("d/m/Y") }}</td>
+						<td>{{ contractMember.status }}</td>
+						<td>{{ contractMember.balance|number_format(2, ',', ' ') }}
+							€</td>
+						<td>{{ contractMember.contract.endDate|date("d/m/Y") }}</td>
+						<td>
+							{% if contractMember.status == 'actif' %}
+								<a href="{{ path('contract_member_show', {'id': contractMember.id}) }}" class="btn btn-outline-info my-1 py-2 px-2" data-toggle='tooltip' data-placement='top' title='Mon contrat'>
+									<i class="fas fa-file-signature fa-2x"></i>
+								</a>
+								<a href="{{ path('contract_member_payments', {'id': contractMember.id}) }}" class="btn btn-outline-info my-1 py-2 px-2" data-toggle='tooltip' data-placement='top' title='Mes paiements'>
+									<i class="fas fa-euro-sign fa-2x"></i>
+								</a>
+							{% endif %}
+
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">Aucun contrats enregistrés</td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
